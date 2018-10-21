@@ -63,7 +63,26 @@ public class Objeto {
         this.total = 0;
     }
 
-    
+    /**
+     * metodo que nos devuelve un string con todos los prestamos
+     * 
+     * @param var
+     * @return 
+     */
+    public String devolverPrestamos(int var){
+        String cadena = "";
+        
+        cadena += "\r\n\t\t\tPRESTAMOS DEL OBJETO " + var + "\r\n\r\n";        
+        if(prestamos.size() > 0){
+            for(Prestamo p : prestamos){
+                cadena += p.toString();
+            }
+        }else{
+            cadena = "\r\n\t\t\tEL objeto " + var + " no tiene prestamos asociados\r\n\r\n";
+        }
+        
+        return cadena;
+    }
     /**
      * metodo que nos muestra todos los objetos los prestamos
      * 

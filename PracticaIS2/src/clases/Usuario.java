@@ -39,6 +39,31 @@ public class Usuario {
 
     public Usuario() {}
     
+    
+    /**
+     * metodo que nos devuelve un string con todos los objetos 
+     * y sus respectivos prestamos
+     * 
+     * @param var
+     * @return 
+     */
+    public String devolverObjetos(int var){
+        String cadena = "";
+        
+        cadena += "\r\n\t\tOBJETOS DEL PROPIETARIO " + var + "\r\n\r\n";
+        
+        if(objetos.size() > 0){
+            for(Objeto o : objetos){
+                cadena += o.toString();
+                cadena += o.devolverPrestamos(o.getCodigoObjeto());
+            }
+        }else{
+            cadena = "\r\n\t\tEl propietario " + var + " no tiene objetos asociados\r\n\r\n";
+        }
+        
+        return cadena;
+    }
+    
     /**
      * metodo que modifica el importe del objeto requerido
      * 

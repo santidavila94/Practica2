@@ -8,7 +8,10 @@ package Funciones;
 import clases.Objeto;
 import clases.Prestamo;
 import clases.Usuario;
+import java.io.File;
+import java.io.FileWriter;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -35,6 +38,44 @@ public class Funciones {
     public Funciones(){
         usuarios = new ArrayList<>();
         objetos = new ArrayList<>();
+    }
+    
+    /**
+     * metodo que nos permite guardar los datos de la opcion 6
+     * en un fichero
+     * 
+     * @param nombreFichero
+     * @return 
+     */
+    public boolean guardarDatosEnFichero(String nombreFichero){
+        boolean correcto = false;
+        DecimalFormat formato = new DecimalFormat("#.00");
+        String cadena = "";
+        FileWriter escribir = null;
+        
+        try{           
+            File archivo = new File(nombreFichero);
+            
+            escribir = new FileWriter(archivo);
+            
+            for(Usuario u : usuarios){
+                if(u.comprobarNumeroPrestamos()){
+                    cadena += u.toString();
+                    cadena += u.devolverObjetos(u.getCodigo());
+                    cadena += "\r\n\tImporte total acumulado para la startup: " + formato.format(u.getSumaPrestamo()) + " euros\r\n";
+                    
+                    if(cadena != ""){
+                        correcto = true;
+                    }
+                    escribir.write(cadena);
+                } 
+            }  
+            escribir.close();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        
+        return correcto;
     }
     
     /**

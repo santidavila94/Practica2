@@ -28,7 +28,7 @@ public class Practica1Final {
         // TODO code application logic here
         int opcion = 0;
         Scanner lectura = new Scanner(System.in);
-        
+       
         do{
             //mostramos las opciones del menu
             menuPrincipal();
@@ -64,9 +64,26 @@ public class Practica1Final {
                     }
                     
                 break;
+                case 8:
+                    menuOpcion8();
+                break;
             }
-        }while(opcion != 8); 
+        }while(opcion != 9); 
     } 
+    
+    /**
+     * menu con la opcion 8
+     */
+    public static void menuOpcion8(){
+        String nombreFichero = "datosAlquileres.txt";
+        
+        if(!star.guardarDatosEnFichero(nombreFichero)){
+            System.out.println("\n\tERROR, no se han encontrado datos disponibles para guardar\n");
+        }else{
+            System.out.println("\n\tLos datos se han almacenado en el fichero " + nombreFichero + "");
+            System.out.println("\n\tOperacion realizada con exito\n\n");
+        }
+    }
     
     /**
      * menu con la opcion 7
@@ -449,6 +466,7 @@ public class Practica1Final {
         System.out.println("5. Baja de objetos");
         System.out.println("6. Mostrar Saldos");
         System.out.println("7. Modificar Importe Diario del objeto");
-        System.out.println("8. Salir");        
+        System.out.println("8. Guardar datos de clientes con prestamos en un fichero de texto");
+        System.out.println("9. Salir");        
     } 
 }
