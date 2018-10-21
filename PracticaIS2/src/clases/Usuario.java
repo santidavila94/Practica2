@@ -39,6 +39,25 @@ public class Usuario {
 
     public Usuario() {}
     
+    /**
+     * metodo que modifica el importe del objeto requerido
+     * 
+     * @param idObjeto
+     * @param importeNuevo
+     * @return 
+     */
+    public boolean modificarImporte(int idObjeto, float importeNuevo){
+        boolean correcto = false;
+        
+        //primero modificamos el importe del objeto
+        for(Objeto o : objetos){
+            if(o.getCodigoObjeto() == idObjeto){
+                o.setCoste(importeNuevo);
+                correcto = true;
+            }
+        }
+        return correcto;
+    }
     
     /**
      * metodo que cambia la disponibilidad de un objeto

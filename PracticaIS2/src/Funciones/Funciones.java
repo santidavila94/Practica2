@@ -37,7 +37,43 @@ public class Funciones {
         objetos = new ArrayList<>();
     }
     
+    /**
+     * metodo que modifica el importe del objeto requerido
+     * 
+     * @param idObjeto
+     * @param importeNuevo
+     * @return 
+     */
+    public boolean modificarImporte(int idObjeto, float importeNuevo){
+        boolean correcto = false;
+        
+        //primero modificamos el importe del objeto auxiliar que esta en esta clase
+        for(Objeto o : objetos){
+            if(o.getCodigoObjeto() == idObjeto){
+                o.setCoste(importeNuevo);
+                correcto = true;
+            }
+        }
+        
+        //modificamos el valor del objeto del cliente
+        for(Usuario u : usuarios){
+            //recorremos cada usuario y sus objetos, hasta que encuentre el objeto que busca
+            //y cambie su importe
+            if(u.modificarImporte(idObjeto, importeNuevo)){
+                correcto = true;
+            }
+        }
+        return correcto;
+    }
     
+    /**
+     * metodo que comprueba si tenemos objetos dados de alta o no
+     * 
+     * @return 
+     */
+    public int comprobarNumeroObjetos(){
+        return objetos.size();
+    }
     
     /**
      * metodo que nos muestra todos los usuarios, sus objetos y los prestamos

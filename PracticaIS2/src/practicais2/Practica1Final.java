@@ -56,9 +56,37 @@ public class Practica1Final {
                 case 6:
                     menuOpcion6();
                 break;
+                case 7:
+                    if(star.comprobarNumeroObjetos() > 0){
+                        menuOpcion7();
+                    }else{
+                        System.out.println("\n\tNo existem objetos dados de alta\n");
+                    }
+                    
+                break;
             }
-        }while(opcion != 7); 
+        }while(opcion != 8); 
     } 
+    
+    /**
+     * menu con la opcion 7
+     */
+    public static void menuOpcion7(){
+        float importe;
+        int indice;
+          
+        //leemos el objeto del que queremos cambiar su valor
+        indice = leerObjeto();
+        
+        //leemos una antidad
+        importe = leerPrecio();
+        
+        if(star.modificarImporte(indice, importe)){
+            System.out.println("\n\tSe ha modificado correctamente precio....\n");
+        }else{
+            System.out.println("\n\tERROR, no se a podido modificar el precio....\n");
+        }        
+    }
     
      /**
      * menu con la opcion 6 
@@ -420,6 +448,7 @@ public class Practica1Final {
         System.out.println("4. Listar todos los objetos");
         System.out.println("5. Baja de objetos");
         System.out.println("6. Mostrar Saldos");
-        System.out.println("7. Salir");        
+        System.out.println("7. Modificar Importe Diario del objeto");
+        System.out.println("8. Salir");        
     } 
 }
