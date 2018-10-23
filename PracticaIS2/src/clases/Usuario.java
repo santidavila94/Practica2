@@ -20,7 +20,9 @@ public class Usuario {
     private String email;
     private float sumaPrestamo;
     private Objeto objeto;
-    
+    private String direccion;
+    private String poblacion;
+    private String provincia;
     
     /**
      * Constructor de la clase
@@ -35,6 +37,9 @@ public class Usuario {
         this.nombre = nombre;
         objetos = new ArrayList<>();
         this.sumaPrestamo = 0;
+        this.poblacion = "";
+        this.provincia = "";
+        this.direccion = "";
     }
 
     public Usuario() {}
@@ -272,4 +277,49 @@ public class Usuario {
     public void setSumaPrestamo(float sumaPrestamo) {
         this.sumaPrestamo += sumaPrestamo;
     }
+
+    /**
+     * @return the direccion
+     */
+    public String getDireccion() {
+        return direccion;
+    }
+
+    /**
+     * @param direccion the direccion to set
+     */
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    /**
+     * @return the poblacion
+     */
+    public String getPoblacion() {
+        return poblacion;
+    }
+
+    /**
+     * @param poblacion the poblacion to set
+     */
+    public void setPoblacion(String poblacion) {
+        this.poblacion = poblacion;
+    }
+
+    /**
+     * @return the provincia
+     */
+    public String getProvincia() {
+        return provincia;
+    }
+
+    /**
+     * @param provincia the provincia to set
+     */
+    public void setProvincia(String provincia) {
+        this.provincia = provincia;
+    }
+    
+    
+    
 }

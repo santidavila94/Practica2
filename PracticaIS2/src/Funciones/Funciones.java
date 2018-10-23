@@ -8,6 +8,7 @@ package Funciones;
 import clases.Objeto;
 import clases.Prestamo;
 import clases.Usuario;
+import clases.UsuariosAsiduos;
 import java.io.File;
 import java.io.FileWriter;
 import java.text.DateFormat;
@@ -15,6 +16,8 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 
 /**
@@ -27,13 +30,16 @@ public class Funciones {
     private Objeto objeto;
     private Usuario usuario;
     private Prestamo prestamo;
+    private UsuariosAsiduos asiduo;
+    private ArrayList<UsuariosAsiduos> asiduos;
     //variable para controlar los ultimos indices almacenados
     private int indiceUsuario, indiceObjeto;
     //Vector para almacenar todos los ucuarios dados de alta.
     private ArrayList<Usuario> usuarios;
     //vector para almacenar los prestamos
     private ArrayList<Prestamo> prestamos;
-    
+    //vector para almacenar lo ids de lo clientes con prestamos
+    private ArrayList<Integer> ids;
     
     /**
      * Constructor de la clase por defecto
@@ -42,6 +48,108 @@ public class Funciones {
         usuarios = new ArrayList<>();
         objetos = new ArrayList<>();
         prestamos = new ArrayList<>();
+        ids = new ArrayList<>();
+        asiduos = new ArrayList<>();
+    }
+    
+    /**
+     * metodo que muestra de mayor a menor los usuarios que ha realizado prestamos
+     * 
+     * @return 
+     */
+    public boolean mostarUsuariosAsiduos(){
+        Comparator<Float> comparador = Collections.reverseOrder();
+        ArrayList <Float> cantidades = new ArrayList<>();
+        boolean ok = false;
+        
+        //extraemos los id de los clientes
+        this.extraerIds();
+        
+        if(this.ids.size() > 0){
+            ok = true;
+            // calculamos el importe total para cada usuario
+            for(int i = 0 ; i < this.ids.size() ; i++){
+                asiduo = new UsuariosAsiduos();
+                for(Prestamo p : prestamos){
+                    if(this.ids.get(i) == p.getUsuario().getCodigo()){
+                        asiduo.setUsuario(p.getUsuario());
+                        asiduo.sumarImporte(p.getImporteCliente());
+                    }
+                }
+                //añadimos a la lista
+                asiduos.add(asiduo);
+            }
+            
+            //copiamos solo los valores totales de cada cliente en otro array de float
+            for(int i = 0 ; i < this.asiduos.size() ; i++){
+                cantidades.add(asiduos.get(i).getTotal());
+            }
+            
+            //ordenamos de mayor a menor
+            Collections.sort(cantidades, comparador);
+            
+            //comparamos para cada cantidad existente al usuario al que le corresponde
+            //y mostramos los datos por pantalla
+            for(int i = 0 ; i < cantidades.size() ; i++){
+                for(int j = 0 ; j < asiduos.size() ; j++){
+                    if(cantidades.get(i) == asiduos.get(j).getTotal()){
+                        this.mostrarInformacion(asiduos.get(j));
+                        asiduos.remove(j);
+                    }
+                }
+            }
+            //limpiamos los arrays
+            cantidades.clear();
+            this.ids.clear();
+            this.asiduos.clear();
+        }
+        return ok;
+    }
+    
+    /**
+     * metodo que muestra la informacion deseada en la funcion 10
+     * @param as 
+     */
+    public void mostrarInformacion(UsuariosAsiduos as){
+        System.out.println("");
+        System.out.println("\tCodigo : \t" + as.getUsuario().getCodigo());
+        System.out.println("\tNombre : \t" + as.getUsuario().getNombre()); 
+        System.out.println("\tDireccion : \t" + as.getUsuario().getDireccion());
+        System.out.println("\tPoblacion : \t" + as.getUsuario().getPoblacion());
+        System.out.println("\tProvincia : \t" + as.getUsuario().getProvincia());
+        System.out.println("\tTotal : \t" + as.getTotal());
+        System.out.println("");
+    }
+    
+    /**
+     * metodo que nos ayuda a extraer todos los ids de los clientes 
+     * que tiene prestamos.
+     */
+    public void extraerIds(){        
+        
+        for(Prestamo p : prestamos){
+            if(!this.comprobarArray(p.getUsuario().getCodigo())){
+                ids.add(p.getUsuario().getCodigo());
+            }
+        }
+    }
+    
+    /**
+     * metodo que comprueba si el id del cliente esta o no 
+     * en el array
+     * 
+     * @param id
+     * @return 
+     */
+    public boolean comprobarArray(int id){
+        boolean esta = false;
+        
+        for(int i : this.ids){
+            if(id == i){
+                esta = true;
+            }
+        }        
+        return esta;
     }
     
     /**

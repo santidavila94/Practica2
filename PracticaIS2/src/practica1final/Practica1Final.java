@@ -29,7 +29,7 @@ public class Practica1Final {
         // TODO code application logic here
         int opcion = 0;
         Scanner lectura = new Scanner(System.in);
-        
+       
         do{
             //mostramos las opciones del menu
             menuPrincipal();
@@ -70,9 +70,23 @@ public class Practica1Final {
                 case 9:
                     menuOpcion9();
                 break;
+                case 10:
+                    menuOpcion10();
+                break;
             }
-        }while(opcion != 10); 
+        }while(opcion != 11); 
     } 
+    
+    /**
+     * menu con la opcion 10
+     */
+    public static void menuOpcion10(){
+        System.out.println("");
+        if(!star.mostarUsuariosAsiduos()){
+            System.out.println("\tNo existen prestamos para comprobar los usuarios mas asiduos..");
+        }
+        System.out.println("");
+    }
     
     /**
      * menu con la opcion 9
@@ -437,7 +451,8 @@ public class Practica1Final {
         String nombre, email;
         boolean validarNombre, validarEmail;
         Usuario usuario = null;
-         
+        String poblacion, provincia, direccion;
+        
         validarEmail = false;
         validarNombre = false;
         
@@ -467,10 +482,18 @@ public class Practica1Final {
             if(!email.equals("") && star.validarEmail(email)){
                 validarEmail = true;
                 
+                //leemos la direccion, poblacion y provincia, que son campos obligatorios
+                direccion = leerEntrada("\tIngresa la direccion : ");
+                provincia = leerEntrada("\tIngresa la provincia : ");
+                poblacion = leerEntrada("\tIngresa la poblacion : ");
+                
                 //agregamos el usuario
                 usuario = new Usuario(star.generarIndice(1), nombre, email);
+                usuario.setDireccion(direccion);
+                usuario.setProvincia(provincia);
+                usuario.setPoblacion(poblacion);
                 star.add(usuario);
-                
+                 
                 //mostramos mensaje de que todo a sido almacenado correctamente
                 System.out.println("\n\tEl usuario a sido almacenado correctamente .....!!!!\n");
             }else{
@@ -478,6 +501,36 @@ public class Practica1Final {
             } 
         }while(validarEmail != true);
     }
+    
+    /**
+     * metodo que lee una entrada por pantalla, y valida que  no sea nula
+     * 
+     * @param mensaje
+     * @return 
+     */
+    public static String leerEntrada(String mensaje){
+        String cadena;
+        boolean valida = false;
+        Scanner lectura = new Scanner(System.in);
+        
+        /**
+         * Controlamos que la cadena ingresada no sea nula
+         */
+        do{
+            System.out.print(mensaje);
+            cadena = lectura.nextLine();
+            
+            //controlamos que el usuario ingrese el nombre
+            if(!cadena.equals("")){
+                valida = true;
+            }else{
+                System.out.println("\tERROR, Este campo es obligatorio....");
+            } 
+        }while(valida != true);
+        
+        return cadena;
+    }
+    
     
     /**
      * Contenido del menu pricipal
@@ -492,6 +545,7 @@ public class Practica1Final {
         System.out.println("7. Modificar Importe Diario del objeto");
         System.out.println("8. Guardar datos de clientes con prestamos en un fichero de texto");
         System.out.println("9. Eliminar usuario");
-        System.out.println("10. Salir");        
+        System.out.println("10. Listar mas asiduos");
+        System.out.println("11. Salir");        
     } 
 }
