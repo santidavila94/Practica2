@@ -21,6 +21,7 @@ public class Practica1Final {
     
     private static Funciones star = new Funciones();
     
+    
     /**
      * @param args the command line arguments
      */
@@ -28,7 +29,7 @@ public class Practica1Final {
         // TODO code application logic here
         int opcion = 0;
         Scanner lectura = new Scanner(System.in);
-       
+        
         do{
             //mostramos las opciones del menu
             menuPrincipal();
@@ -61,15 +62,35 @@ public class Practica1Final {
                         menuOpcion7();
                     }else{
                         System.out.println("\n\tNo existem objetos dados de alta\n");
-                    }
-                    
+                    }                    
                 break;
                 case 8:
                     menuOpcion8();
                 break;
+                case 9:
+                    menuOpcion9();
+                break;
             }
-        }while(opcion != 9); 
+        }while(opcion != 10); 
     } 
+    
+    /**
+     * menu con la opcion 9
+     */
+    public static void menuOpcion9(){
+        int codigoUsuario;
+        
+        System.out.println("");
+        //leemos un usuario que este dado de alta
+        codigoUsuario = leerUsuario();
+                
+        //eliminamos el usuario seleccionado
+        if(star.eliminarUsuario(codigoUsuario) && star.eliminarPrestamo(codigoUsuario)){
+            System.out.println("\n\tEl usuario se ha eliminado correctamente..\n");
+        }else{
+            System.out.println("\n\tERROR AL ELIMINAR EL CLIENTE..\n");
+        }
+    }
     
     /**
      * menu con la opcion 8
@@ -195,6 +216,9 @@ public class Practica1Final {
             
             //almacenamos por cada prestamos, el correspondiente valor al dueño del objeto
             star.sumaValorUsuario((float)(coste*0.10), objeto.getCodigoUsuario());
+            
+            //agregamos el prestamo a la lista de prestamos auxiliar
+            star.add(prestamo);
             
             //almacenamos el prestamo 
             if(star.agregarPrestamo(objeto.getCodigoObjeto(), prestamo)){
@@ -467,6 +491,7 @@ public class Practica1Final {
         System.out.println("6. Mostrar Saldos");
         System.out.println("7. Modificar Importe Diario del objeto");
         System.out.println("8. Guardar datos de clientes con prestamos en un fichero de texto");
-        System.out.println("9. Salir");        
+        System.out.println("9. Eliminar usuario");
+        System.out.println("10. Salir");        
     } 
 }

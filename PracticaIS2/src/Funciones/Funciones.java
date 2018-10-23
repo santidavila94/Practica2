@@ -26,10 +26,13 @@ public class Funciones {
     private ArrayList<Objeto> objetos;
     private Objeto objeto;
     private Usuario usuario;
+    private Prestamo prestamo;
     //variable para controlar los ultimos indices almacenados
     private int indiceUsuario, indiceObjeto;
     //Vector para almacenar todos los ucuarios dados de alta.
     private ArrayList<Usuario> usuarios;
+    //vector para almacenar los prestamos
+    private ArrayList<Prestamo> prestamos;
     
     
     /**
@@ -38,6 +41,47 @@ public class Funciones {
     public Funciones(){
         usuarios = new ArrayList<>();
         objetos = new ArrayList<>();
+        prestamos = new ArrayList<>();
+    }
+    
+    /**
+     * metodo que nos permite eliminar el prestamo de un usuario 
+     * 
+     * @param idUsuario
+     * @return 
+     */
+    public boolean eliminarPrestamo(int idUsuario){
+        boolean eliminado = false;
+        
+        for(int i = 0 ; i < prestamos.size() ; i++){
+            prestamo = prestamos.get(i);
+            if(prestamo.getUsuario().getCodigo() == idUsuario){
+                prestamos.remove(i);
+                eliminado = true;
+            }
+        }        
+        return eliminado;
+    }
+    
+    /**
+     * metodo que elimina un usuario
+     * 
+     * @param idUsuario
+     * @return 
+     */
+    public boolean eliminarUsuario(int idUsuario){
+        boolean eliminado = false;
+        int id = 0;
+        
+        for(int i =  0; i < usuarios.size() ; i++){
+            usuario = usuarios.get(i);            
+            if(idUsuario == usuario.getCodigo()){
+                usuarios.remove(id);
+                eliminado = true;
+            }
+        }
+        
+        return eliminado;
     }
     
     /**
@@ -419,6 +463,16 @@ public class Funciones {
     //metodo para añadir un usuario dado de alta
     public boolean add(Usuario usuario){
         return(usuarios.add(usuario));
+    }
+    
+    /**
+     * metodo que añade un prestamo
+     * 
+     * @param p
+     * @return 
+     */
+    public boolean add(Prestamo p){
+        return (prestamos.add(p));
     }
     
     /**
